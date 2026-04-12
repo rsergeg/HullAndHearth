@@ -1,0 +1,31 @@
+Folder PATH listing for volume NewDrive
+Volume serial number is 4A6E-B2AA
+D:.
+|   .gitignore
+|   .gitkeep
+|   hullandhearth_structure.old.txt
+|   hullandhearth_structure.txt
+|   icon.svg
+|   icon.svg.import
+|   main.tscn
+|   project.godot
+|   README.md
+|   
+|                   
+\---src
+    +---core
+    |       HH_TechTree.gd
+    |       HH_TechTree.gd.uid
+    |       HH_World.gd
+    |       HH_World.gd.uid
+    |       
+    +---entities
+    |       HH_Player.gd
+    |       HH_Player.gd.uid
+    |       
+    \---world
+            HH_Chunk.gd
+            HH_Chunk.gd.uid
+            HH_WorldGen.gd
+            HH_WorldGen.gd.uid
+            
