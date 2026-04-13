@@ -52,15 +52,15 @@ func rebuild_mesh() -> void:
 	var st := SurfaceTool.new()
 	st.begin(Mesh.PRIMITIVE_TRIANGLES)
 
-	for x in SIZE_X:
-		for y in SIZE_Y:
-			for z in SIZE_Z:
+	for x in range(SIZE_X):
+		for y in range (SIZE_Y):
+			for z in range (SIZE_Z):
 				var voxel := get_voxel(x, y, z)
 				if voxel == VOXEL_AIR:
 					continue
 
 				var color := _voxel_color(voxel)
-				for face_idx in FACE_NORMALS.size():
+				for face_idx in range (FACE_NORMALS.size()):
 					var normal: Vector3 = FACE_NORMALS[face_idx]
 					var nx := x + int(normal.x)
 					var ny := y + int(normal.y)
@@ -68,10 +68,37 @@ func rebuild_mesh() -> void:
 					if _is_solid(get_voxel(nx, ny, nz)):
 						continue
 					_append_face(st, Vector3(x, y, z), face_idx, color)
-
+					
+	# new code here
 	st.generate_normals()
 	var built_mesh := st.commit()
 	_mesh_instance.mesh = built_mesh
+
+	# adds color to blocks
+	var mat := StandardMaterial3D.new()
+	mat.vertex_color_use_as_albedo = true
+	mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+
+	# block outline / grid lines
+	var outline := StandardMaterial3D.new()
+	outline.shading_mode = BaseMaterial3D.SHADING_MODE_UNSHADED
+	outline.albedo_color = Color(0, 0, 0, 0.15)
+	outline.cull_mode = BaseMaterial3D.CULL_FRONT
+	outline.grow = true
+	outline.grow_amount = 0.004
+
+	_mesh_instance.material_override = mat
+	_mesh_instance.material_overlay = outline
+	
+	
+	#st.generate_normals()
+	#var built_mesh := st.commit()
+	# adds color to blocks
+	#var mat := StandardMaterial3D.new()
+	#mat.vertex_color_use_as_albedo = true
+	#mat.shading_mode = BaseMaterial3D.SHADING_MODE_PER_PIXEL
+	#_mesh_instance.material_override = mat
+	#_mesh_instance.mesh = built_mesh
 
 	if built_mesh:
 		var shape := ConcavePolygonShape3D.new()

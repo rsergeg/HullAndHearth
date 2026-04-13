@@ -7,15 +7,6 @@
 radius = 0.4
 height = 1.2
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_0xm2m"]
-
-[sub_resource type="Sky" id="Sky_h2yge"]
-sky_material = SubResource("ProceduralSkyMaterial_0xm2m")
-
-[sub_resource type="Environment" id="Environment_1bvp3"]
-background_mode = 2
-sky = SubResource("Sky_h2yge")
-
 [node name="Main" type="Node3D" unique_id=1097588997]
 
 [node name="World" type="Node3D" parent="." unique_id=1603478029]
@@ -38,6 +29,3 @@ target_position = Vector3(0, 0, -7)
 [node name="Sun" type="DirectionalLight3D" parent="." unique_id=254029147]
 transform = Transform3D(0.7648422, -0.50463307, 0.40045214, 0, 0.62161, 0.7833269, -0.64421767, -0.5991215, 0.47543356, 0, 0, 0)
 light_energy = 1.1
-
-[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=847564432]
-environment = SubResource("Environment_1bvp3")

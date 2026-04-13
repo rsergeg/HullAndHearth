@@ -7,7 +7,7 @@ const HH_Chunk = preload("res://src/world/HH_Chunk.gd")
 @export var sprint_speed: float = 10.0
 @export var jump_velocity: float = 5.5
 @export var mouse_sensitivity: float = 0.0025
-@export var gravity: float = ProjectSettings.get_setting("physics/3d/default_gravity")
+@export var gravity: float = float(ProjectSettings.get_setting("physics/3d/default_gravity"))
 @export var interact_distance: float = 7.0
 
 @onready var camera: Camera3D = $Camera3D

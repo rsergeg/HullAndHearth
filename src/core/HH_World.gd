@@ -48,14 +48,13 @@ func _spawn_chunk(coord: Vector2i) -> void:
 
 	var voxel_data := PackedInt32Array()
 	voxel_data.resize(HH_Chunk.SIZE_X * HH_Chunk.SIZE_Y * HH_Chunk.SIZE_Z)
-
-	for lx in HH_Chunk.SIZE_X:
-		for lz in HH_Chunk.SIZE_Z:
+	for lx in range(HH_Chunk.SIZE_X):
+		for lz in range(HH_Chunk.SIZE_Z):
 			var world_x := coord.x * HH_Chunk.SIZE_X + lx
 			var world_z := coord.y * HH_Chunk.SIZE_Z + lz
 			var surface_y := _sample_surface_height(world_x, world_z)
 			var biome := _sample_biome(surface_y)
-			for y in HH_Chunk.SIZE_Y:
+			for y in range(HH_Chunk.SIZE_Y):
 				var voxel := HH_Chunk.VOXEL_AIR
 				if y <= surface_y:
 					voxel = _sample_block(y, surface_y, biome, world_x, world_z)
@@ -93,13 +92,13 @@ func _set_block(block: Vector3i, voxel: int) -> void:
 
 
 func _sample_surface_height(world_x: int, world_z: int) -> int:
-	var base_h := (_height_noise.get_noise_2d(world_x, world_z) + 1.0) * 0.5
-	var island_mask := clamp((_island_mask_noise.get_noise_2d(world_x, world_z) + 1.0) * 0.5, 0.0, 1.0)
-	var island_profile := pow(island_mask, 2.4)
-	var mountain := max(_mountain_noise.get_noise_2d(world_x, world_z), 0.0)
+	var base_h: float = (_height_noise.get_noise_2d(world_x, world_z) + 1.0) * 0.5
+	var island_mask: float = clampf((_island_mask_noise.get_noise_2d(world_x, world_z) + 1.0) * 0.5, 0.0, 1.0)
+	var island_profile: float = pow(island_mask, 2.4)
+	var mountain: float = maxf(_mountain_noise.get_noise_2d(world_x, world_z), 0.0)
 
-	var island_height := lerpf(float(sea_level) - 3.0, float(max_height) - 2.0, base_h * island_profile)
-	var with_mountains := island_height + mountain * 8.0
+	var island_height: float = lerpf(float(sea_level) - 3.0, float(max_height) - 2.0, base_h * island_profile)
+	var with_mountains: float = island_height + mountain * 8.0
 	return clampi(roundi(with_mountains), 1, max_height)
 
 
